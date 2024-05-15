@@ -182,7 +182,7 @@ if (bundlerMode != "no") {
 			// console.log("decision: " + shouldStubbify(curPath, file, depList));
 			// let curAbsPath: string = process.cwd() + curPath;
 			if( shouldStubbify( curPath, file, depList)) { // don't even try to stub externs
-
+				fs.appendFileSync("Playground/all_files_in_stubbifier.txt", `${file}\n`);
 				if( noCG || listedFiles.indexOf(curPath) > -1) { // file is reachable, so only stubify functions
 					console.log("FUNCTION CASE: " + curPath);
 
@@ -194,7 +194,7 @@ if (bundlerMode != "no") {
 					}
 				} else {
 					console.log("FILE CASE: " + curPath);
-					
+					fs.appendFileSync("Playground/unaccessed_files_in_stubbifier.txt", `${curPath}\n`);
 					try {
 						fileStubFile(curPath, safeEvalMode, testingMode);
 					}catch(e) {
